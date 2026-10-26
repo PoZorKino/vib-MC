@@ -7,7 +7,7 @@
 [![Vibecoded](https://img.shields.io/badge/Vibecoded-ff69b4?style=for-the-badge)]()
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.8--26.1.2-blue?style=for-the-badge&logo=minecraft)]()
 [![License: GPL--3.0](https://img.shields.io/badge/License-GPL--3.0-yellow?style=for-the-badge)](LICENSE)
-[![Release](https://img.shields.io/badge/Release-v0.0.7-blue?style=for-the-badge)](https://github.com/vib-studios/vib-MC/releases/tag/v0.0.7)
+[![Rolling Release](https://img.shields.io/badge/release-rolling%20latest-blue?style=for-the-badge)](https://github.com/vib-studios/vib-MC/releases/latest)
 
 **vibed into existence** — a Minecraft server made entirely by AI, one prompt at a time.
 
@@ -23,7 +23,17 @@ The project focuses on experimenting with Minecraft server internals, custom wor
 
 vib-MC is a hobby/experimental project and is not intended to replace mature server software such as Paper or Vanilla. Development is rapid and early: world and player-data formats may, while unlikely, change without migration, and resets could be required at any time.
 
-## Latest Release — v0.0.7 — the survival release
+## Releases
+
+vib-MC ships as a **rolling release**. There are no fixed version releases any more: every push to `main` rebuilds and republishes a single `latest` release, so the download link never changes:
+
+```text
+https://github.com/vib-studios/vib-MC/releases/latest/download/vib-mc.jar
+```
+
+Grab `vib-mc.jar` from the [latest release](https://github.com/vib-studios/vib-MC/releases/latest). The `vX.Y.Z` tags further down are kept as history from before the switch.
+
+## Current build — the survival release
 
 **v0.0.7 is where vib-MC stops being a world you look at and becomes one you can play.** Blocks drop what you break, tools wear out, sand and gravel fall, water and lava flow, leaves decay, and ore generates in veins. You can starve, drown, suffocate, burn and fall — and heal again when you are fed. Crafting works in your inventory and at a crafting table, furnaces smelt, chests keep 27 slots across restarts, armour reduces damage, and PvP hits back with knockback. Blocks, damage and deaths finally make sounds.
 
@@ -282,6 +292,8 @@ npm run test:versions     # client connections across protocol versions
 `tools/package.json` lists the remaining suites.
 
 ## Version History
+
+Before the switch to rolling releases, vib-MC published fixed version tags. Those are kept here for history.
 
 | Status | Version |
 |:------:|---------|

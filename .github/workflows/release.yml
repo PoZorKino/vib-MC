@@ -1,0 +1,66 @@
+name: Rolling Release
+
+# vib-MC ships as a rolling release: there are no fixed version releases any
+# more. Every push to `main` rebuilds and republishes a single `latest`
+# release, so the download URL never changes:
+#
+#   https://github.com/vib-studios/vib-MC/releases/latest/download/vib-mc.jar
+#
+# The `latest` tag is moved to the built commit on every run, and the existing
+# release asset is replaced in place.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Never let two builds race for the same release.
+concurrency:
+  group: rolling-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          # The build packages resources from the vendored minecraft-data submodule.
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build and test
+        run: ./gradlew --no-daemon build
+
+      - name: Publish rolling release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          jar=build/libs/vib-mc.jar
+          test -f "$jar"
+
+          # Keep the `latest` tag pointing at the commit that was just built.
+          git tag -f latest "$GITHUB_SHA"
+          git push --force origin refs/tags/latest
+
+          short_sha="${GITHUB_SHA:0:7}"
+          notes="Rolling build of \`main\` at \`${short_sha}\`, rebuilt automatically on every push."
+
+          if gh release view latest >/dev/null 2>&1; then
+            gh release edit latest --title "Rolling release" --notes "$notes" --latest
+          else
+            gh release create latest --title "Rolling release" --notes "$notes" --latest
+          fi
+
+          gh release upload latest "$jar" --clobber
