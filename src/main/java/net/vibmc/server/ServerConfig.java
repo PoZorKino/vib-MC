@@ -176,6 +176,8 @@ public final class ServerConfig {
         return getBoolean("allow-flight");
     }
 
+    public boolean pvp() { return getBoolean("pvp"); }
+
     public boolean allowNether() { return getBoolean("allow-nether"); }
     public boolean allowEnd() { return getBoolean("allow-end"); }
     public boolean generateStructures() { return getBoolean("generate-structures"); }

@@ -351,6 +351,7 @@ public class PlayerManager {
             if(online.getEntityId()==targetEntityId&&online.getWorld()==attacker.getWorld()){target=online;break;}
         }
         if(target==null||target==attacker||!target.isAlive())return;
+        if(!VibMC.getInstance().getConfig().pvp())return;
         double dx=target.getX()-attacker.getX(),dy=target.getY()-attacker.getY(),dz=target.getZ()-attacker.getZ();
         double distance=dx*dx+dy*dy+dz*dz;
         if(distance>36.0)return;
