@@ -8,6 +8,11 @@ java {
     withSourcesJar()
 }
 
+// vib-MC ships as a rolling release, so the jar no longer carries a fixed version
+// number. CI passes -PbuildVersion (see .github/workflows/release.yml); local builds
+// fall back to "dev".
+def buildVersion = providers.gradleProperty('buildVersion').getOrElse('dev')
+
 tasks.withType(JavaCompile).configureEach {
     options.release = 8
     options.encoding = 'UTF-8'
@@ -81,7 +86,7 @@ jar {
         attributes(
             'Main-Class': 'net.vibmc.server.VibMC',
             'Implementation-Title': 'vib-MC',
-            'Implementation-Version': '0.0.7'
+            'Implementation-Version': buildVersion
         )
     }
     archiveBaseName = 'vib-mc'
