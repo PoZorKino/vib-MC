@@ -3,6 +3,7 @@ package net.vibmc.command.commands;
 import net.vibmc.command.Command;
 import net.vibmc.command.CommandSender;
 import net.vibmc.server.VibMC;
+import net.vibmc.world.World;
 
 import java.util.Locale;
 
@@ -22,8 +23,9 @@ public class WeatherCommand extends Command {
             case "clear":
             case "rain":
             case "thunder":
-                VibMC.getInstance().getWorldManager().getMainWorld().weatherSystem().setWeather(weather);
-                VibMC.getInstance().getPlayerManager().broadcastWeather(weather);
+                World world = VibMC.getInstance().getWorldManager().getMainWorld();
+                world.weatherSystem().setWeather(weather);
+                VibMC.getInstance().getPlayerManager().broadcastWeather(world, weather);
                 sender.sendMessage("{\"text\":\"§aWeather set to " + weather + ".\"}");
                 return true;
             default:

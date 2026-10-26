@@ -669,9 +669,11 @@ public class PlayerManager {
         }
     }
 
-    public void broadcastWeather(String weather) {
+    public void broadcastWeather(World world, String weather) {
         for (ServerPlayer player : players.values()) {
-            sendWeather(player.getUser(), weather);
+            if (player.getWorld() == world) {
+                sendWeather(player.getUser(), weather);
+            }
         }
     }
 
